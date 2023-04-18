@@ -44,6 +44,8 @@ resource "null_resource" "ansible_provisioner" {
 
   provisioner "local-exec" {
     command = "ansible-playbook -i ${var.inventory_filename} create_folder.yml"
+    //ansible-playbook -i 'target_host,' your_playbook.yml --user your_username --private-key /path/to/your_private_key.pem
+
   }
 
   triggers = {
