@@ -1,0 +1,22 @@
+---
+- name: Ensure instance is accessible
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Wait for SSH port to be accessible
+      ansible.builtin.wait_for:
+        host: "{{ inventory_hostname }}"
+        port: 22
+        delay: 40
+        timeout: 400
+      delegate_to: localhost
+
+- name: Create a folder on AWS EC2 instance
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create the folder
+      ansible.builtin.file:
+        path: "/home/ubuntu/test_folder"
+        state: directory
+        mode: '0755'
